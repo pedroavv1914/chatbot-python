@@ -1,0 +1,4 @@
+2024/12/03-19:27:43.295 3960 Reusing MANIFEST C:\Users\pedro\Desktop\PEDRO\Códigos\BACKEND\trabalho.python\pasta\sessao\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2024/12/03-19:27:43.296 3960 Recovering log #480
+2024/12/03-19:27:43.303 3960 Reusing old log C:\Users\pedro\Desktop\PEDRO\Códigos\BACKEND\trabalho.python\pasta\sessao\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000480.log 
+2024/12/03-19:27:44.487 3a74 Manual compaction at level-0 from '\x00}\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00~\x00\x00\x00' @ 0 : 0; will stop at (end)
