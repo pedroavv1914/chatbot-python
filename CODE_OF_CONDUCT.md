@@ -25,9 +25,3 @@ Violations may result in:
 2. Warning
 3. Temporary ban
 4. Permanent ban
-
-## Reporting
-
-Contact the project maintainer at [your-email@example.com]
-
-_Adapted from [Contributor Covenant 2.1](https://www.contributor-covenant.org/)_
