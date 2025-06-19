@@ -1,0 +1,13 @@
+# Python dependencies
+
+# Core requirements
+selenium==4.0.0
+
+# Optional (uncomment if needed)
+# python-dotenv==1.0.0  # For environment variables
+# mysql-connector-python==8.0.32  # For MySQL integration
+# pandas==1.5.3  # For data handling
+
+# Development
+# pylint==2.17.4  # Code quality
+# black==23.3.0  # Code formatting
