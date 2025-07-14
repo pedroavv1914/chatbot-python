@@ -1,11 +1,12 @@
 # Python dependencies
 
 # Core requirements
-selenium==4.0.0
+selenium==4.1.0
+requests==2.26.0
+mysql-connector-python==8.0.27
 
 # Optional (uncomment if needed)
 # python-dotenv==1.0.0  # For environment variables
-# mysql-connector-python==8.0.32  # For MySQL integration
 # pandas==1.5.3  # For data handling
 
 # Development
