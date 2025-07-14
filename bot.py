@@ -4,20 +4,34 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 import os
 import time
-import requests
+import logging
+from conversation_manager import ConversationManager
+
+# Configuração de logging para o bot.py
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+# Configurações do banco de dados (ajuste conforme seu ambiente)
+db_config = {
+    'host': 'localhost',
+    'user': 'root',
+    'password': '',
+    'database': 'bot_curso'
+}
+
+# Inicializa o gerenciador de conversa
+conversation_manager = ConversationManager(db_config)
+
+# Definindo seletores diretamente no código (removendo dependência da API externa)
+# ATENÇÃO: Estes seletores podem mudar com atualizações do WhatsApp Web.
+# Você precisará monitorar e ajustar se o bot parar de funcionar.
+bolinha_notificacao = '_ao3e' # Exemplo, ajuste conforme necessário
+contato_cliente = '//*[@id="main"]/header/div[2]/div[1]/div/span' # Exemplo, ajuste conforme necessário
+caixa_msg = '_akbu' # Exemplo, ajuste conforme necessário
+msg_cliente = '_akbu' # Exemplo, ajuste conforme necessário
+caixa_msg2 = '_akbu' # Exemplo, ajuste conforme necessário
+caixa_pesquisa = 'input[title="Pesquisar ou começar uma nova conversa"]' # Exemplo, ajuste conforme necessário
 
 agent = {"User-Agent": 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36'}
-
-api = requests.get("https://editacodigo.com.br/index/api-whatsapp/K4x519uHfU6FT6c8tzR8gV5JEJsIRuDg" ,  headers=agent)
-time.sleep(1)
-api = api.text
-api = api.split(".n.")
-bolinha_notificacao = api[3].strip()
-contato_cliente = api[4].strip()
-caixa_msg = api[5].strip()
-msg_cliente = api[6].strip()
-caixa_msg2 = api[7].strip()
-caixa_pesquisa = api[8].strip()
 
 usuario = 'botbala@gmail.com'
 dir_path = os.getcwd()
@@ -56,9 +70,7 @@ def bot():
         time.sleep(1)
 
         #RESPONDENDO CLIENTE
-        resposta = requests.get('http://localhost/Bot_Curso/index.php?', params={'msg': msg, 'telefone': telefone_final, 'usuario': usuario}, headers=agent)
-        time.sleep(1)
-        resposta = resposta.text
+        resposta = conversation_manager.get_bot_response(telefone_final, msg, usuario)
         campo_de_texto = driver.find_element(By.XPATH,'//*[@id="main"]/footer/div[1]/div/span/div/div[2]/div[1]/div/div[1]/p')
         campo_de_texto.click()
         time.sleep(1)
@@ -67,8 +79,14 @@ def bot():
         #FECHAR CONTATO
         webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
 
-    except:
-        print('AGUARDANDO NOVAS MENSAGENS')
+    except Exception as e:
+        logging.error(f'Ocorreu um erro no bot: {e}')
+        logging.info('AGUARDANDO NOVAS MENSAGENS')
+        # Em caso de erro, pode ser útil tentar fechar o contato para evitar loops
+        try:
+            webdriver.ActionChains(driver).send_keys(Keys.ESCAPE).perform()
+        except Exception as esc_e:
+            logging.warning(f'Erro ao tentar fechar contato após falha: {esc_e}')
 
 while True:
     bot()
